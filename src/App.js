@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.scss';
 import ColorBox from './components/ColorBox';
+import PostList from './components/PostList';
 import TodoForm from './components/TodoForm';
 import TodoList from './components/TodoList';
+import postList from './services/postApi';
 
 function App() {
   const [todoList, setTodoList] = useState([
@@ -10,6 +12,26 @@ function App() {
     { id: 2, title: 'We love Easy Frontend! 🥰 ' },
     { id: 3, title: 'They love Easy Frontend! 🚀 ' },
   ]);
+
+  const [data, setData] = useState([]);
+
+  useEffect(()=>{
+    const fetchPostList = async() => {
+      try{
+        const params = {
+          _limit: 10,
+          _page: 1,
+        };
+        const results = await postList.getPost(params);
+        setData(results.data);
+      }
+      catch(error){
+        console.log('Failed to fetch post list: ', error.message);
+      }
+    }
+
+    fetchPostList();
+  }, [])
 
   const handleTodoClick = (todo) => {
   // const newTodoList = [...todoList].filter(item => item.id !== todo.id);
@@ -34,13 +56,14 @@ function App() {
   return (
     <div className="app">
       <h1>Welcome react hooks</h1>
-      <h1>{test}</h1>
-      <ColorBox/>
+      {/* <ColorBox/>
       <TodoList
         todos={todoList}
         handleTodoClick={handleTodoClick}
       />
-      <TodoForm onSubmit={handleOnSubmit}/>
+      <TodoForm onSubmit={handleOnSubmit}/> */}
+      <PostList posts={data}/>
+      
     </div>
   );
 }
