@@ -1,37 +1,19 @@
 import { useEffect, useState } from 'react';
 import './App.scss';
 import ColorBox from './components/ColorBox';
+import Pagination from './components/Pagination';
 import PostList from './components/PostList';
 import TodoForm from './components/TodoForm';
 import TodoList from './components/TodoList';
 import postList from './services/postApi';
 
 function App() {
+  // Lap 4, 5 TodoList and TodoForm
   const [todoList, setTodoList] = useState([
     { id: 1, title: 'I love Easy Frontend! 😍 ' },
     { id: 2, title: 'We love Easy Frontend! 🥰 ' },
     { id: 3, title: 'They love Easy Frontend! 🚀 ' },
   ]);
-
-  const [data, setData] = useState([]);
-
-  useEffect(()=>{
-    const fetchPostList = async() => {
-      try{
-        const params = {
-          _limit: 10,
-          _page: 1,
-        };
-        const results = await postList.getPost(params);
-        setData(results.data);
-      }
-      catch(error){
-        console.log('Failed to fetch post list: ', error.message);
-      }
-    }
-
-    fetchPostList();
-  }, [])
 
   const handleTodoClick = (todo) => {
   // const newTodoList = [...todoList].filter(item => item.id !== todo.id);
@@ -49,8 +31,41 @@ function App() {
       id: todoList.length + 1,
       ...formValue
     }
-    console.log(newForm);
     setTodoList([...todoList, newForm]);
+  }
+
+  // Lap 7: Call Api
+  const [data, setData] = useState([]);
+  const [filter, setFilter] = useState({
+    _page: 1,
+    _limit: 10,
+  })
+  useEffect(()=>{
+    const fetchPostList = async() => {
+      try{
+        const results = await postList.getPost(filter);
+        console.log(results);
+        setData(results.data);
+        setPagination(results.pagination);
+
+      }
+      catch(error){
+        console.log('Failed to fetch post list: ', error.message);
+      }
+    }
+    fetchPostList();
+  }, [filter])
+
+  // Lap 8: Pagination 
+  const [pagination, setPagination] = useState({
+    _page: 1,
+    _limit: 10,
+    _totalRows: 1
+  });
+
+  const handlePageChange = (newPage) => {
+    const newPagination = {...filter, _page: newPage};
+    setFilter(newPagination);
   }
 
   return (
@@ -62,8 +77,13 @@ function App() {
         handleTodoClick={handleTodoClick}
       />
       <TodoForm onSubmit={handleOnSubmit}/> */}
-      <PostList posts={data}/>
-      
+      <PostList 
+        posts={data}
+      />
+      <Pagination
+        pagination={pagination}
+        onPageChange={handlePageChange} 
+      />
     </div>
   );
 }
