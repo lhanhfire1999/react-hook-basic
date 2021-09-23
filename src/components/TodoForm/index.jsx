@@ -30,7 +30,9 @@ function TodoForm(props) {
     setValue(valueInput)
   }
   return (
-    <form onSubmit={handleOnChange}>
+    <form 
+      onSubmit={handleSubmitClick}
+    >
       <input 
         type='text'
         value={value}
