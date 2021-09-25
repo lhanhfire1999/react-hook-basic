@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.scss';
+import Clock from './components/Clock';
 import ColorBox from './components/ColorBox';
 import Pagination from './components/Pagination';
 import PostFilterForm from './components/PostFilterForm';
@@ -37,49 +38,52 @@ function App() {
   }
   */
 
-  // Lap 7: Call Api
-  const [data, setData] = useState([]);
-  const [filter, setFilter] = useState({
-    _page: 1,
-    _limit: 10,
-    title_like: ''
-  })
-  useEffect(()=>{
-    const fetchPostList = async() => {
-      try{
-        const results = await postList.getPost(filter);
-        console.log(results);
-        setData(results.data);
-        setPagination(results.pagination);
+  // // Lap 7: Call Api
+  // const [data, setData] = useState([]);
+  // const [filter, setFilter] = useState({
+  //   _page: 1,
+  //   _limit: 10,
+  //   title_like: ''
+  // })
+  // useEffect(()=>{
+  //   const fetchPostList = async() => {
+  //     try{
+  //       const results = await postList.getPost(filter);
+  //       console.log(results);
+  //       setData(results.data);
+  //       setPagination(results.pagination);
 
-      }
-      catch(error){
-        console.log('Failed to fetch post list: ', error.message);
-      }
-    }
-    fetchPostList();
-  }, [filter])
+  //     }
+  //     catch(error){
+  //       console.log('Failed to fetch post list: ', error.message);
+  //     }
+  //   }
+  //   fetchPostList();
+  // }, [filter])
 
-  // Lap 8: Pagination 
-  const [pagination, setPagination] = useState({
-    _page: 1,
-    _limit: 10,
-    _totalRows: 1
-  });
+  // // Lap 8: Pagination 
+  // const [pagination, setPagination] = useState({
+  //   _page: 1,
+  //   _limit: 10,
+  //   _totalRows: 1
+  // });
 
-  const handlePageChange = (newPage) => {
-    const newPagination = {...filter, _page: newPage};
-    setFilter(newPagination);
-  }
+  // const handlePageChange = (newPage) => {
+  //   const newPagination = {...filter, _page: newPage};
+  //   setFilter(newPagination);
+  // }
 
-  // Lap 9: PostFilterForm -> debounce
-  const handleFilterChange = (value) => {
-    setFilter({
-      ...filter,
-      title_like: value.searchTerm,
-      _page: 1
-    })
-  }
+  // // Lap 9: PostFilterForm -> debounce
+  // const handleFilterChange = (value) => {
+  //   setFilter({
+  //     ...filter,
+  //     title_like: value.searchTerm,
+  //     _page: 1
+  //   })
+  // }
+
+  // Lap 10: Clock
+  const [showClock, setShowClock] = useState(true);
 
   return (
     <div className="app">
@@ -89,7 +93,7 @@ function App() {
         todos={todoList}
         handleTodoClick={handleTodoClick}
       />
-      <TodoForm onSubmit={handleOnSubmit}/>  */}
+      <TodoForm onSubmit={handleOnSubmit}/>  *
       <PostFilterForm onSubmit={handleFilterChange}/>
       <PostList 
         posts={data}
@@ -97,7 +101,9 @@ function App() {
       <Pagination
         pagination={pagination}
         onPageChange={handlePageChange} 
-      />
+      /> */}
+      {showClock && <Clock/>}
+      <button onClick={()=> setShowClock(false)}>Hide Clock</button>
     </div>
   );
 }
