@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.scss';
+import BetterClock from './components/BetterClock';
 import Clock from './components/Clock';
 import ColorBox from './components/ColorBox';
 import Pagination from './components/Pagination';
@@ -103,6 +104,7 @@ function App() {
         onPageChange={handlePageChange} 
       /> */}
       {showClock && <Clock/>}
+      <BetterClock/>
       <button onClick={()=> setShowClock(false)}>Hide Clock</button>
     </div>
   );
