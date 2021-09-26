@@ -3,6 +3,7 @@ import './App.scss';
 import BetterClock from './components/BetterClock';
 import Clock from './components/Clock';
 import ColorBox from './components/ColorBox';
+import MagicColorBox from './components/MagicColorBox';
 import Pagination from './components/Pagination';
 import PostFilterForm from './components/PostFilterForm';
 import PostList from './components/PostList';
@@ -84,7 +85,7 @@ function App() {
   // }
 
   // Lap 10: Clock
-  const [showClock, setShowClock] = useState(true);
+  // const [showClock, setShowClock] = useState(true);
 
   return (
     <div className="app">
@@ -102,10 +103,12 @@ function App() {
       <Pagination
         pagination={pagination}
         onPageChange={handlePageChange} 
-      /> */}
+      /> 
       {showClock && <Clock/>}
       <BetterClock/>
-      <button onClick={()=> setShowClock(false)}>Hide Clock</button>
+      <button onClick={()=> setShowClock(false)}>Hide Clock</button> */}
+      <MagicColorBox/>
+
     </div>
   );
 }
