@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Hero from './components/Hero';
 
 function App() {
@@ -7,9 +7,10 @@ function App() {
     setValue( () => value + 1 ) ;
   }
 // Render gives handleHeroClick have a new address, therefore child-component uses React.momo still render.
-  const handleHeroClick = () => {
-
-  }
+  // const handleHeroClick = () => { }
+  
+  // Fix useCallback()
+  const handleHeroClick = useCallback((type)=>{}, []);
   return (
     <div>
       <div>{value}</div>

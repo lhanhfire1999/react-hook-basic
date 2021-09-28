@@ -2,10 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 Hero.propTypes = {
-  name: PropTypes.string
+  name: PropTypes.string,
+  onClick: PropTypes.func
 };
 Hero.defaultProps = {
-  name: ''
+  name: '',
+  onClick: null
 };
 
 function Hero(props) {
